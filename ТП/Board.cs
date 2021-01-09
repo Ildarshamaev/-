@@ -1,34 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace ТП
+namespace Chess
 {
     class Board
     {
-        private int[,] map = new int[8, 8]
-        {
-            {15,14,13,12,11,13,14,15 },
-            {16,16,16,16,16,16,16,16 },
-            {0,0,0,0,0,0,0,0 },
-            {0,0,0,0,0,0,0,0 },
-            {0,0,0,0,0,0,0,0 },
-            {0,0,0,0,0,0,0,0 },
-            {26,26,26,26,26,26,26,26 },
-            {25,24,23,22,21,23,24,25 },
-        };
-
-        private Button[,] butts = new Button[8, 8];
-
+        private int[,] map;
+        private Button[,] butts;
         private int currPlayer;
-
-        public int [,] Map
+        public Image chessSprites;
+        public int[,] Map
         {
             get => map;
-        } 
+        }
         public Button[,] Butts
         {
             get => butts;
@@ -37,7 +26,28 @@ namespace ТП
         {
             get => currPlayer;
         }
-        public void CreateMap()
+        public Image ChessSprites
+        {
+            get => chessSprites;
+        }
+        public Board()
+        {
+            this.map = new int[8, 8]
+            {
+            {15,14,13,12,11,13,14,15 },
+            {16,16,16,16,16,16,16,16 },
+            {0,0,0,0,0,0,0,0 },
+            {0,0,0,0,0,0,0,0 },
+            {0,0,0,0,0,0,0,0 },
+            {0,0,0,0,0,0,0,0 },
+            {26,26,26,26,26,26,26,26 },
+            {25,24,23,22,21,23,24,25 },
+            };
+            this.currPlayer = 1;
+            this.butts = new Button[8, 8];
+            this.chessSprites = new Bitmap("chess.png");
+        }
+        public void CreateBoard()
         {
             for (int i = 0; i < 8; i++)
             {
@@ -65,13 +75,46 @@ namespace ТП
                             break;
                     }
                     butt.BackColor = Color.White;
-                    butt.Click += new EventHandler(OnFigurePress);
-                    this.Controls.Add(butt);
-
                     butts[i, j] = butt;
                 }
             }
         }
-    }
 
+        public void DeactivateAllButtons()
+        {
+            for (int i = 0; i < 8; i++)
+            {
+                for (int j = 0; j < 8; j++)
+                {
+                    butts[i, j].Enabled = false;
+                }
+            }
+        }
+        public void ActivateAllButtons()
+        {
+            for (int i = 0; i < 8; i++)
+            {
+                for (int j = 0; j < 8; j++)
+                {
+                    butts[i, j].Enabled = true;
+                }
+            }
+        }
+        public void CloseSteps()
+        {
+            for (int i = 0; i < 8; i++)
+            {
+                for (int j = 0; j < 8; j++)
+                {
+                    butts[i, j].BackColor = Color.White;
+                }
+            }
+        }
+        public void SwitchPlayer()
+        {
+            if (currPlayer == 1)
+                currPlayer = 2;
+            else currPlayer = 1;
+        }
+    }
 }
