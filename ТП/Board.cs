@@ -18,7 +18,7 @@ namespace Chess
         {
             get => map;
         }
-        public Button[,] Butts
+        public Button[,] Butts 
         {
             get => butts;
         }
